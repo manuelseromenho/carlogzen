@@ -62,8 +62,13 @@
        </rect>
       </property>
       <property name="columnCount">
-       <number>5</number>
+       <number>6</number>
       </property>
+      <column>
+       <property name="text">
+        <string>id</string>
+       </property>
+      </column>
       <column>
        <property name="text">
         <string>marca</string>
@@ -114,6 +119,19 @@
       </property>
       <property name="text">
        <string>Apagar</string>
+      </property>
+     </widget>
+     <widget class="QLabel" name="countrows">
+      <property name="geometry">
+       <rect>
+        <x>90</x>
+        <y>345</y>
+        <width>81</width>
+        <height>21</height>
+       </rect>
+      </property>
+      <property name="text">
+       <string>TextLabel</string>
       </property>
      </widget>
     </widget>

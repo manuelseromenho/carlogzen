@@ -13,13 +13,16 @@ MainWindow::MainWindow(QWidget *parent) :
 
     //ligar à base dados
     db = QSqlDatabase::addDatabase("QSQLITE");
-    db.setDatabaseName("carlogzendb.db");
+    db.setDatabaseName("../carlogzen/carlogzendb.db");
     db.open();
     if (!db.open()){
         qDebug() << "Erro a abrir base dados" << db.lastError().text();
         ui->statusBar->showMessage("Database connection failure!");
         this->close();
     }else{ui->statusBar->showMessage("Database connection OK!");};
+
+    //ui->tabela_caracteristicas->hideColumn(ui->tabela_caracteristicas->column(1));
+    ui->tabela_caracteristicas->setColumnHidden(0, true);
 
     FillTable();
 }
@@ -33,26 +36,29 @@ MainWindow::~MainWindow()
 void MainWindow::FillTable(){
 
     int num_result, l, c;
-    QSqlQuery consulta(db);
+    QSqlQuery query(db);
     loaded = false;
 
-    if(!consulta.exec("SELECT count(idcaracteristicas) as num_result FROM caracteristicas")) qDebug() << consulta.lastError().text();
+    if(!query.exec("SELECT count(idcaracteristicas) as num_result FROM caracteristicas")) qDebug() << query.lastError().text();
 
-    consulta.first();
-    num_result = consulta.value(0).toInt();
+    query.first();
+    num_result = query.value(0).toInt();
+
+    //ui->countrows->setText(QString::number(num_result));
 
     ui->tabela_caracteristicas->setRowCount(num_result);
 
-    if (!consulta.exec("SELECT marca, modelo, cilindrada, cor, combustivel  FROM caracteristicas"))
+    if (!query.exec("SELECT idcaracteristicas, marca, modelo, cilindrada, cor, combustivel  FROM caracteristicas"))
     {
-        qDebug() << consulta.lastError().text();
+        qDebug() << query.lastError().text();
         return ;
     }
 
-    for(l=0, consulta.first(); consulta.isValid(); consulta.next(), ++l){
-        for(c=0; c<10; c++)
+    for(l=0, query.first(); query.isValid(); query.next(), ++l)
+    {
+        for(c=0; c<num_result; c++)
         {
-            ui->tabela_caracteristicas->setItem(l, c, new QTableWidgetItem( consulta.value(c).toString()));
+            ui->tabela_caracteristicas->setItem(l, c, new QTableWidgetItem( query.value(c).toString()));
         }
     }
     loaded = true;
@@ -62,10 +68,12 @@ void MainWindow::FillTable(){
 
 }
 
+
+
 void MainWindow::on_adicionar_caracteristica_clicked()
 {
-    QSqlQuery consulta(db);
-    if(!consulta.exec("INSERT INTO caracteristicas(marca, modelo, cilindrada, cor, combustivel) VALUES('','', '', '','')"))  qDebug() << consulta.lastError().text();
+    QSqlQuery query(db);
+    if(!query.exec("INSERT INTO caracteristicas(marca, modelo, cilindrada, cor, combustivel) VALUES('','', '', '','')"))  qDebug() << query.lastError().text();
 
     FillTable();
 
@@ -75,12 +83,17 @@ void MainWindow::on_adicionar_caracteristica_clicked()
 void MainWindow::on_apagar_caracteristica_clicked()
 {
     int del_id = ui->tabela_caracteristicas->item(ui->tabela_caracteristicas->currentRow(), 0)->text().toInt();
+    ui->tabela_caracteristicas->removeRow(ui->tabela_caracteristicas->currentRow());
 
-    QSqlQuery consulta(db);
-    consulta.prepare("DELETE FROM caracteristicas WHERE idcaracteristica = :id");
-    consulta.bindValue(":id", del_id);
+    /*ui->tabela_caracteristicas->setRowCount(0);*/
+    /*ui->tabela_caracteristicas->model()->removeRows(0, ui->tabela_caracteristicas->rowCount());*/
 
-    if (!consulta.exec()) qDebug() << consulta.lastError().text();
+
+    QSqlQuery query(db);
+    query.prepare("DELETE FROM caracteristicas WHERE idcaracteristica = :id");
+    query.bindValue(":id", del_id);
+
+    if (!query.exec()) qDebug() << query.lastError().text();
     FillTable();
 }
 
@@ -90,16 +103,16 @@ void MainWindow::on_tabela_caracteristicas_cellChanged(int row, int column)
 
         // get record id from column 0
         int id = ui->tabela_caracteristicas->item(row, 0)->text().toInt();
-        QSqlQuery consulta(db) ;
+        QSqlQuery query(db) ;
 
-        consulta.prepare("UPDATE caracteristicas SET marca=:n, modelo=:e, cilindrada=:c, cor=:f, combustivel=:d WHERE idcaracteristicas=:i" );
-        consulta.bindValue (":n", ui->tabela_caracteristicas->item(row, 1)->text());
-        consulta.bindValue (":e", ui->tabela_caracteristicas->item (row, 2)->text());
-        consulta.bindValue (":c", ui->tabela_caracteristicas->item (row, 3)->text());
-        consulta.bindValue (":f", ui->tabela_caracteristicas->item (row, 4)->text());
-        consulta.bindValue (":d", ui->tabela_caracteristicas->item (row, 5)->text());
-        consulta.bindValue (":i", id);
+        query.prepare("UPDATE caracteristicas SET marca=:n, modelo=:e, cilindrada=:c, cor=:f, combustivel=:d WHERE idcaracteristicas=:i" );
+        query.bindValue (":n", ui->tabela_caracteristicas->item(row, 1)->text());
+        query.bindValue (":e", ui->tabela_caracteristicas->item (row, 2)->text());
+        query.bindValue (":c", ui->tabela_caracteristicas->item (row, 3)->text());
+        query.bindValue (":f", ui->tabela_caracteristicas->item (row, 4)->text());
+        query.bindValue (":d", ui->tabela_caracteristicas->item (row, 5)->text());
+        query.bindValue (":i", id);
 
-        if (!consulta.exec())
-        qDebug() << consulta.lastError().text();
+        if (!query.exec())
+        qDebug() << query.lastError().text();
 }
