@@ -42,11 +42,17 @@
       <height>431</height>
      </rect>
     </property>
+    <property name="currentIndex">
+     <number>0</number>
+    </property>
     <widget class="QWidget" name="tab">
      <attribute name="title">
       <string>Tab 1</string>
      </attribute>
      <widget class="QTableWidget" name="tabela_caracteristicas">
+      <property name="enabled">
+       <bool>true</bool>
+      </property>
       <property name="geometry">
        <rect>
         <x>10</x>
@@ -54,6 +60,9 @@
         <width>751</width>
         <height>321</height>
        </rect>
+      </property>
+      <property name="columnCount">
+       <number>5</number>
       </property>
       <column>
        <property name="text">
@@ -77,9 +86,35 @@
       </column>
       <column>
        <property name="text">
-        <string>combustivel </string>
+        <string>combustivel</string>
        </property>
       </column>
+     </widget>
+     <widget class="QPushButton" name="adicionar_caracteristica">
+      <property name="geometry">
+       <rect>
+        <x>440</x>
+        <y>340</y>
+        <width>93</width>
+        <height>28</height>
+       </rect>
+      </property>
+      <property name="text">
+       <string>Adicionar</string>
+      </property>
+     </widget>
+     <widget class="QPushButton" name="apagar_caracteristica">
+      <property name="geometry">
+       <rect>
+        <x>540</x>
+        <y>340</y>
+        <width>93</width>
+        <height>28</height>
+       </rect>
+      </property>
+      <property name="text">
+       <string>Apagar</string>
+      </property>
      </widget>
     </widget>
     <widget class="QWidget" name="tab_2">

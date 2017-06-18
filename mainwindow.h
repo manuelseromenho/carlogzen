@@ -24,6 +24,13 @@ public:
     explicit MainWindow(QWidget *parent = 0);
     ~MainWindow();
 
+private slots:
+    void on_adicionar_caracteristica_clicked();
+
+    void on_apagar_caracteristica_clicked();
+
+    void on_tabela_caracteristicas_cellChanged(int row, int column);
+
 private:
     Ui::MainWindow *ui;
     QSqlDatabase db;

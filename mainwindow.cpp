@@ -56,4 +56,50 @@ void MainWindow::FillTable(){
         }
     }
     loaded = true;
+
+    QTableWidgetItem *item = new QTableWidgetItem();
+    item->setFlags(item->flags() ^ Qt::ItemIsEditable);
+
+}
+
+void MainWindow::on_adicionar_caracteristica_clicked()
+{
+    QSqlQuery consulta(db);
+    if(!consulta.exec("INSERT INTO caracteristicas(marca, modelo, cilindrada, cor, combustivel) VALUES('','', '', '','')"))  qDebug() << consulta.lastError().text();
+
+    FillTable();
+
+    ui->tabela_caracteristicas->scrollToBottom();
+}
+
+void MainWindow::on_apagar_caracteristica_clicked()
+{
+    int del_id = ui->tabela_caracteristicas->item(ui->tabela_caracteristicas->currentRow(), 0)->text().toInt();
+
+    QSqlQuery consulta(db);
+    consulta.prepare("DELETE FROM caracteristicas WHERE idcaracteristica = :id");
+    consulta.bindValue(":id", del_id);
+
+    if (!consulta.exec()) qDebug() << consulta.lastError().text();
+    FillTable();
+}
+
+void MainWindow::on_tabela_caracteristicas_cellChanged(int row, int column)
+{
+    if(!loaded) return;
+
+        // get record id from column 0
+        int id = ui->tabela_caracteristicas->item(row, 0)->text().toInt();
+        QSqlQuery consulta(db) ;
+
+        consulta.prepare("UPDATE caracteristicas SET marca=:n, modelo=:e, cilindrada=:c, cor=:f, combustivel=:d WHERE idcaracteristicas=:i" );
+        consulta.bindValue (":n", ui->tabela_caracteristicas->item(row, 1)->text());
+        consulta.bindValue (":e", ui->tabela_caracteristicas->item (row, 2)->text());
+        consulta.bindValue (":c", ui->tabela_caracteristicas->item (row, 3)->text());
+        consulta.bindValue (":f", ui->tabela_caracteristicas->item (row, 4)->text());
+        consulta.bindValue (":d", ui->tabela_caracteristicas->item (row, 5)->text());
+        consulta.bindValue (":i", id);
+
+        if (!consulta.exec())
+        qDebug() << consulta.lastError().text();
 }
