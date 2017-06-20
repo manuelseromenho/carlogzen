@@ -1,8 +1,8 @@
-CREATE DATABASE  IF NOT EXISTS `carlogzen` /*!40100 DEFAULT CHARACTER SET utf8 */;
-USE `carlogzen`;
+CREATE DATABASE  IF NOT EXISTS `carlogzendb4` /*!40100 DEFAULT CHARACTER SET utf8 */;
+USE `carlogzendb4`;
 -- MySQL dump 10.13  Distrib 5.7.9, for Win64 (x86_64)
 --
--- Host: 127.0.0.1    Database: carlogzen
+-- Host: 127.0.0.1    Database: carlogzendb4
 -- ------------------------------------------------------
 -- Server version	5.7.18-log
 
@@ -246,7 +246,7 @@ LOCK TABLES `users` WRITE;
 UNLOCK TABLES;
 
 --
--- Dumping routines for database 'carlogzen'
+-- Dumping routines for database 'carlogzendb4'
 --
 /*!40103 SET TIME_ZONE=@OLD_TIME_ZONE */;
 

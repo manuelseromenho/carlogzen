@@ -25,19 +25,43 @@ public:
     ~MainWindow();
 
 private slots:
+
     void on_adicionar_caracteristica_clicked();
-
     void on_apagar_caracteristica_clicked();
-
     void on_tabela_caracteristicas_cellChanged(int row, int column);
+
+    void on_pushButton_clicked();
+    void on_logout_clicked();
+
+    void on_adicionar_peca_clicked();
+    void on_apagar_peca_clicked();
+    void on_tabela_pecas_cellChanged(int row, int column);
+
+    void on_adicionar_manutencao_clicked();
+
+    void on_apagar_manutencao_clicked();
+
+    void on_tabela_manutencao_cellChanged(int row, int column);
+
+    void on_comprar_clicked();
+
+    void on_tabWidget_tabBarClicked(int index);
+
+    void on_vender_clicked();
+
+    void on_adicionar_abastecimento_clicked();
 
 private:
     Ui::MainWindow *ui;
     QSqlDatabase db;
     bool loaded;
-    //QComboBox* aa;
-    //QDateEdit *dateEdit;
+    QComboBox *combo_box;
+    QDateEdit *dateEdit;
     void FillTable();
+    void FillTable_pecas();
+    void FillTable_manutencao();
+    void FillTable_automoveis();
+    void FillTable_abastecimento();
 };
 
 #endif // MAINWINDOW_H

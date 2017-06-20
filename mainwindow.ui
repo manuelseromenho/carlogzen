@@ -7,18 +7,770 @@
     <x>0</x>
     <y>0</y>
     <width>825</width>
-    <height>612</height>
+    <height>648</height>
    </rect>
   </property>
   <property name="windowTitle">
    <string>MainWindow</string>
   </property>
   <widget class="QWidget" name="centralWidget">
+   <widget class="QStackedWidget" name="stackedWidget">
+    <property name="geometry">
+     <rect>
+      <x>10</x>
+      <y>10</y>
+      <width>801</width>
+      <height>561</height>
+     </rect>
+    </property>
+    <property name="currentIndex">
+     <number>1</number>
+    </property>
+    <widget class="QWidget" name="page">
+     <widget class="QLabel" name="label_2">
+      <property name="geometry">
+       <rect>
+        <x>280</x>
+        <y>130</y>
+        <width>271</width>
+        <height>61</height>
+       </rect>
+      </property>
+      <property name="font">
+       <font>
+        <pointsize>24</pointsize>
+       </font>
+      </property>
+      <property name="text">
+       <string>CarLogZen</string>
+      </property>
+      <property name="alignment">
+       <set>Qt::AlignCenter</set>
+      </property>
+     </widget>
+     <widget class="QWidget" name="layoutWidget">
+      <property name="geometry">
+       <rect>
+        <x>300</x>
+        <y>210</y>
+        <width>229</width>
+        <height>57</height>
+       </rect>
+      </property>
+      <layout class="QVBoxLayout" name="verticalLayout">
+       <item>
+        <layout class="QHBoxLayout" name="horizontalLayout_2">
+         <item>
+          <widget class="QLabel" name="label_3">
+           <property name="font">
+            <font>
+             <pointsize>10</pointsize>
+            </font>
+           </property>
+           <property name="text">
+            <string>Username:</string>
+           </property>
+          </widget>
+         </item>
+         <item>
+          <widget class="QLineEdit" name="username"/>
+         </item>
+        </layout>
+       </item>
+       <item>
+        <layout class="QHBoxLayout" name="horizontalLayout">
+         <item>
+          <widget class="QLabel" name="label_4">
+           <property name="font">
+            <font>
+             <pointsize>10</pointsize>
+            </font>
+           </property>
+           <property name="text">
+            <string>Password:</string>
+           </property>
+          </widget>
+         </item>
+         <item>
+          <widget class="QLineEdit" name="password">
+           <property name="echoMode">
+            <enum>QLineEdit::Password</enum>
+           </property>
+          </widget>
+         </item>
+        </layout>
+       </item>
+      </layout>
+     </widget>
+     <widget class="QWidget" name="layoutWidget">
+      <property name="geometry">
+       <rect>
+        <x>320</x>
+        <y>280</y>
+        <width>195</width>
+        <height>30</height>
+       </rect>
+      </property>
+      <layout class="QHBoxLayout" name="horizontalLayout_3">
+       <item>
+        <widget class="QPushButton" name="pushButton">
+         <property name="text">
+          <string>Login</string>
+         </property>
+        </widget>
+       </item>
+       <item>
+        <widget class="QPushButton" name="pushButton_2">
+         <property name="text">
+          <string>Consulta</string>
+         </property>
+        </widget>
+       </item>
+      </layout>
+     </widget>
+    </widget>
+    <widget class="QWidget" name="page_2">
+     <property name="maximumSize">
+      <size>
+       <width>791</width>
+       <height>541</height>
+      </size>
+     </property>
+     <widget class="QTabWidget" name="tabWidget">
+      <property name="geometry">
+       <rect>
+        <x>0</x>
+        <y>20</y>
+        <width>791</width>
+        <height>471</height>
+       </rect>
+      </property>
+      <property name="currentIndex">
+       <number>2</number>
+      </property>
+      <widget class="QWidget" name="tab_automoveis">
+       <attribute name="title">
+        <string>Automoveis</string>
+       </attribute>
+       <widget class="QPushButton" name="apagar_automovel">
+        <property name="geometry">
+         <rect>
+          <x>540</x>
+          <y>340</y>
+          <width>93</width>
+          <height>28</height>
+         </rect>
+        </property>
+        <property name="text">
+         <string>Apagar</string>
+        </property>
+       </widget>
+       <widget class="QTableWidget" name="tabela_automoveis">
+        <property name="enabled">
+         <bool>true</bool>
+        </property>
+        <property name="geometry">
+         <rect>
+          <x>10</x>
+          <y>10</y>
+          <width>751</width>
+          <height>321</height>
+         </rect>
+        </property>
+        <property name="columnCount">
+         <number>10</number>
+        </property>
+        <column>
+         <property name="text">
+          <string>id</string>
+         </property>
+        </column>
+        <column>
+         <property name="text">
+          <string>marca</string>
+         </property>
+        </column>
+        <column>
+         <property name="text">
+          <string>modelo</string>
+         </property>
+        </column>
+        <column>
+         <property name="text">
+          <string>cilindrada</string>
+         </property>
+        </column>
+        <column>
+         <property name="text">
+          <string>cor</string>
+         </property>
+        </column>
+        <column>
+         <property name="text">
+          <string>combustivel</string>
+         </property>
+        </column>
+        <column>
+         <property name="text">
+          <string>data aquisição</string>
+         </property>
+        </column>
+        <column>
+         <property name="text">
+          <string>preço aquisição</string>
+         </property>
+        </column>
+        <column>
+         <property name="text">
+          <string>data venda</string>
+         </property>
+        </column>
+        <column>
+         <property name="text">
+          <string>preço venda</string>
+         </property>
+        </column>
+       </widget>
+       <widget class="QPushButton" name="adicionar_automovel">
+        <property name="geometry">
+         <rect>
+          <x>440</x>
+          <y>340</y>
+          <width>93</width>
+          <height>28</height>
+         </rect>
+        </property>
+        <property name="text">
+         <string>Adicionar</string>
+        </property>
+       </widget>
+       <widget class="QPushButton" name="vender">
+        <property name="geometry">
+         <rect>
+          <x>180</x>
+          <y>370</y>
+          <width>93</width>
+          <height>28</height>
+         </rect>
+        </property>
+        <property name="text">
+         <string>Vender</string>
+        </property>
+       </widget>
+       <widget class="QWidget" name="layoutWidget_4">
+        <property name="geometry">
+         <rect>
+          <x>20</x>
+          <y>370</y>
+          <width>151</width>
+          <height>30</height>
+         </rect>
+        </property>
+        <layout class="QHBoxLayout" name="horizontalLayout_11">
+         <item>
+          <widget class="QLabel" name="label_14">
+           <property name="font">
+            <font>
+             <pointsize>10</pointsize>
+            </font>
+           </property>
+           <property name="text">
+            <string>Preco</string>
+           </property>
+          </widget>
+         </item>
+         <item>
+          <widget class="QLineEdit" name="preco_venda">
+           <property name="enabled">
+            <bool>true</bool>
+           </property>
+          </widget>
+         </item>
+        </layout>
+       </widget>
+       <widget class="QWidget" name="layoutWidget_5">
+        <property name="geometry">
+         <rect>
+          <x>20</x>
+          <y>340</y>
+          <width>151</width>
+          <height>24</height>
+         </rect>
+        </property>
+        <layout class="QHBoxLayout" name="horizontalLayout_12">
+         <item>
+          <widget class="QLabel" name="label_15">
+           <property name="font">
+            <font>
+             <pointsize>10</pointsize>
+            </font>
+           </property>
+           <property name="text">
+            <string>Data:</string>
+           </property>
+          </widget>
+         </item>
+         <item>
+          <widget class="QDateEdit" name="data_venda"/>
+         </item>
+        </layout>
+       </widget>
+      </widget>
+      <widget class="QWidget" name="tab_caracteristicas">
+       <attribute name="title">
+        <string>Caracteristicas</string>
+       </attribute>
+       <widget class="QTableWidget" name="tabela_caracteristicas">
+        <property name="enabled">
+         <bool>true</bool>
+        </property>
+        <property name="geometry">
+         <rect>
+          <x>10</x>
+          <y>10</y>
+          <width>751</width>
+          <height>321</height>
+         </rect>
+        </property>
+        <property name="columnCount">
+         <number>6</number>
+        </property>
+        <column>
+         <property name="text">
+          <string>id</string>
+         </property>
+        </column>
+        <column>
+         <property name="text">
+          <string>marca</string>
+         </property>
+        </column>
+        <column>
+         <property name="text">
+          <string>modelo</string>
+         </property>
+        </column>
+        <column>
+         <property name="text">
+          <string>cilindrada</string>
+         </property>
+        </column>
+        <column>
+         <property name="text">
+          <string>cor</string>
+         </property>
+        </column>
+        <column>
+         <property name="text">
+          <string>combustivel</string>
+         </property>
+        </column>
+       </widget>
+       <widget class="QPushButton" name="adicionar_caracteristica">
+        <property name="geometry">
+         <rect>
+          <x>440</x>
+          <y>340</y>
+          <width>93</width>
+          <height>28</height>
+         </rect>
+        </property>
+        <property name="text">
+         <string>Adicionar</string>
+        </property>
+       </widget>
+       <widget class="QPushButton" name="apagar_caracteristica">
+        <property name="geometry">
+         <rect>
+          <x>540</x>
+          <y>340</y>
+          <width>93</width>
+          <height>28</height>
+         </rect>
+        </property>
+        <property name="text">
+         <string>Apagar</string>
+        </property>
+       </widget>
+       <widget class="QWidget" name="layoutWidget">
+        <property name="geometry">
+         <rect>
+          <x>20</x>
+          <y>370</y>
+          <width>151</width>
+          <height>30</height>
+         </rect>
+        </property>
+        <layout class="QHBoxLayout" name="horizontalLayout_5">
+         <item>
+          <widget class="QLabel" name="label_8">
+           <property name="font">
+            <font>
+             <pointsize>10</pointsize>
+            </font>
+           </property>
+           <property name="text">
+            <string>Preco</string>
+           </property>
+          </widget>
+         </item>
+         <item>
+          <widget class="QLineEdit" name="preco_compra">
+           <property name="enabled">
+            <bool>true</bool>
+           </property>
+          </widget>
+         </item>
+        </layout>
+       </widget>
+       <widget class="QPushButton" name="comprar">
+        <property name="geometry">
+         <rect>
+          <x>180</x>
+          <y>400</y>
+          <width>93</width>
+          <height>28</height>
+         </rect>
+        </property>
+        <property name="text">
+         <string>Comprar</string>
+        </property>
+       </widget>
+       <widget class="QWidget" name="layoutWidget_2">
+        <property name="geometry">
+         <rect>
+          <x>20</x>
+          <y>400</y>
+          <width>151</width>
+          <height>30</height>
+         </rect>
+        </property>
+        <layout class="QHBoxLayout" name="horizontalLayout_6">
+         <item>
+          <widget class="QLabel" name="label_9">
+           <property name="font">
+            <font>
+             <pointsize>10</pointsize>
+            </font>
+           </property>
+           <property name="text">
+            <string>Matricula</string>
+           </property>
+          </widget>
+         </item>
+         <item>
+          <widget class="QLineEdit" name="matricula">
+           <property name="enabled">
+            <bool>true</bool>
+           </property>
+           <property name="inputMask">
+            <string>00-AA-00</string>
+           </property>
+          </widget>
+         </item>
+        </layout>
+       </widget>
+       <widget class="QWidget" name="layoutWidget">
+        <property name="geometry">
+         <rect>
+          <x>20</x>
+          <y>340</y>
+          <width>151</width>
+          <height>24</height>
+         </rect>
+        </property>
+        <layout class="QHBoxLayout" name="horizontalLayout_4">
+         <item>
+          <widget class="QLabel" name="label_7">
+           <property name="font">
+            <font>
+             <pointsize>10</pointsize>
+            </font>
+           </property>
+           <property name="text">
+            <string>Data:</string>
+           </property>
+          </widget>
+         </item>
+         <item>
+          <widget class="QDateEdit" name="data_compra"/>
+         </item>
+        </layout>
+       </widget>
+       <zorder>layoutWidget</zorder>
+       <zorder>tabela_caracteristicas</zorder>
+       <zorder>adicionar_caracteristica</zorder>
+       <zorder>apagar_caracteristica</zorder>
+       <zorder>layoutWidget</zorder>
+       <zorder>comprar</zorder>
+       <zorder>layoutWidget_2</zorder>
+      </widget>
+      <widget class="QWidget" name="tab_abastecimento">
+       <attribute name="title">
+        <string>Abastecimento</string>
+       </attribute>
+       <widget class="QPushButton" name="adicionar_abastecimento">
+        <property name="geometry">
+         <rect>
+          <x>440</x>
+          <y>340</y>
+          <width>93</width>
+          <height>28</height>
+         </rect>
+        </property>
+        <property name="text">
+         <string>Adicionar</string>
+        </property>
+       </widget>
+       <widget class="QPushButton" name="apagar_abastecimento">
+        <property name="geometry">
+         <rect>
+          <x>540</x>
+          <y>340</y>
+          <width>93</width>
+          <height>28</height>
+         </rect>
+        </property>
+        <property name="text">
+         <string>Apagar</string>
+        </property>
+       </widget>
+       <widget class="QTableWidget" name="tabela_abastecimento">
+        <property name="enabled">
+         <bool>true</bool>
+        </property>
+        <property name="geometry">
+         <rect>
+          <x>10</x>
+          <y>10</y>
+          <width>751</width>
+          <height>321</height>
+         </rect>
+        </property>
+        <property name="columnCount">
+         <number>8</number>
+        </property>
+        <column>
+         <property name="text">
+          <string>id</string>
+         </property>
+        </column>
+        <column>
+         <property name="text">
+          <string>matricula</string>
+         </property>
+        </column>
+        <column>
+         <property name="text">
+          <string>local</string>
+         </property>
+        </column>
+        <column>
+         <property name="text">
+          <string>data</string>
+         </property>
+        </column>
+        <column>
+         <property name="text">
+          <string>kms</string>
+         </property>
+        </column>
+        <column>
+         <property name="text">
+          <string>litros</string>
+         </property>
+        </column>
+        <column>
+         <property name="text">
+          <string>preço</string>
+         </property>
+        </column>
+        <column>
+         <property name="text">
+          <string>total</string>
+         </property>
+        </column>
+       </widget>
+      </widget>
+      <widget class="QWidget" name="tab_pecas">
+       <attribute name="title">
+        <string>Peças e Manutenção</string>
+       </attribute>
+       <widget class="QPushButton" name="adicionar_peca">
+        <property name="geometry">
+         <rect>
+          <x>100</x>
+          <y>351</y>
+          <width>93</width>
+          <height>28</height>
+         </rect>
+        </property>
+        <property name="text">
+         <string>Adicionar</string>
+        </property>
+       </widget>
+       <widget class="QTableWidget" name="tabela_pecas">
+        <property name="enabled">
+         <bool>true</bool>
+        </property>
+        <property name="geometry">
+         <rect>
+          <x>60</x>
+          <y>41</y>
+          <width>281</width>
+          <height>301</height>
+         </rect>
+        </property>
+        <property name="columnCount">
+         <number>3</number>
+        </property>
+        <column>
+         <property name="text">
+          <string>id</string>
+         </property>
+        </column>
+        <column>
+         <property name="text">
+          <string>peca</string>
+         </property>
+        </column>
+        <column>
+         <property name="text">
+          <string>preço</string>
+         </property>
+        </column>
+       </widget>
+       <widget class="QPushButton" name="apagar_peca">
+        <property name="geometry">
+         <rect>
+          <x>200</x>
+          <y>351</y>
+          <width>93</width>
+          <height>28</height>
+         </rect>
+        </property>
+        <property name="text">
+         <string>Apagar</string>
+        </property>
+       </widget>
+       <widget class="QTableWidget" name="tabela_manutencao">
+        <property name="enabled">
+         <bool>true</bool>
+        </property>
+        <property name="geometry">
+         <rect>
+          <x>400</x>
+          <y>40</y>
+          <width>351</width>
+          <height>301</height>
+         </rect>
+        </property>
+        <property name="columnCount">
+         <number>3</number>
+        </property>
+        <column>
+         <property name="text">
+          <string>id</string>
+         </property>
+        </column>
+        <column>
+         <property name="text">
+          <string>tipo manutenção</string>
+         </property>
+        </column>
+        <column>
+         <property name="text">
+          <string>preço</string>
+         </property>
+        </column>
+       </widget>
+       <widget class="QPushButton" name="adicionar_manutencao">
+        <property name="geometry">
+         <rect>
+          <x>460</x>
+          <y>350</y>
+          <width>93</width>
+          <height>28</height>
+         </rect>
+        </property>
+        <property name="text">
+         <string>Adicionar</string>
+        </property>
+       </widget>
+       <widget class="QPushButton" name="apagar_manutencao">
+        <property name="geometry">
+         <rect>
+          <x>560</x>
+          <y>350</y>
+          <width>93</width>
+          <height>28</height>
+         </rect>
+        </property>
+        <property name="text">
+         <string>Apagar</string>
+        </property>
+       </widget>
+       <widget class="QLabel" name="label_5">
+        <property name="geometry">
+         <rect>
+          <x>180</x>
+          <y>20</y>
+          <width>55</width>
+          <height>21</height>
+         </rect>
+        </property>
+        <property name="font">
+         <font>
+          <pointsize>10</pointsize>
+         </font>
+        </property>
+        <property name="text">
+         <string>Peças</string>
+        </property>
+       </widget>
+       <widget class="QLabel" name="label_6">
+        <property name="geometry">
+         <rect>
+          <x>470</x>
+          <y>12</y>
+          <width>181</width>
+          <height>31</height>
+         </rect>
+        </property>
+        <property name="font">
+         <font>
+          <pointsize>10</pointsize>
+         </font>
+        </property>
+        <property name="text">
+         <string>Tipo Manutenção</string>
+        </property>
+        <property name="alignment">
+         <set>Qt::AlignCenter</set>
+        </property>
+       </widget>
+      </widget>
+     </widget>
+     <widget class="QPushButton" name="logout">
+      <property name="geometry">
+       <rect>
+        <x>540</x>
+        <y>500</y>
+        <width>93</width>
+        <height>28</height>
+       </rect>
+      </property>
+      <property name="text">
+       <string>Logout</string>
+      </property>
+     </widget>
+    </widget>
+   </widget>
    <widget class="QLabel" name="label">
     <property name="geometry">
      <rect>
-      <x>660</x>
-      <y>400</y>
+      <x>650</x>
+      <y>410</y>
       <width>141</width>
       <height>141</height>
      </rect>
@@ -33,116 +785,6 @@
      <bool>true</bool>
     </property>
    </widget>
-   <widget class="QTabWidget" name="tabWidget">
-    <property name="geometry">
-     <rect>
-      <x>10</x>
-      <y>10</y>
-      <width>791</width>
-      <height>431</height>
-     </rect>
-    </property>
-    <property name="currentIndex">
-     <number>0</number>
-    </property>
-    <widget class="QWidget" name="tab">
-     <attribute name="title">
-      <string>Tab 1</string>
-     </attribute>
-     <widget class="QTableWidget" name="tabela_caracteristicas">
-      <property name="enabled">
-       <bool>true</bool>
-      </property>
-      <property name="geometry">
-       <rect>
-        <x>10</x>
-        <y>10</y>
-        <width>751</width>
-        <height>321</height>
-       </rect>
-      </property>
-      <property name="columnCount">
-       <number>6</number>
-      </property>
-      <column>
-       <property name="text">
-        <string>id</string>
-       </property>
-      </column>
-      <column>
-       <property name="text">
-        <string>marca</string>
-       </property>
-      </column>
-      <column>
-       <property name="text">
-        <string>modelo</string>
-       </property>
-      </column>
-      <column>
-       <property name="text">
-        <string>cilindrada</string>
-       </property>
-      </column>
-      <column>
-       <property name="text">
-        <string>cor</string>
-       </property>
-      </column>
-      <column>
-       <property name="text">
-        <string>combustivel</string>
-       </property>
-      </column>
-     </widget>
-     <widget class="QPushButton" name="adicionar_caracteristica">
-      <property name="geometry">
-       <rect>
-        <x>440</x>
-        <y>340</y>
-        <width>93</width>
-        <height>28</height>
-       </rect>
-      </property>
-      <property name="text">
-       <string>Adicionar</string>
-      </property>
-     </widget>
-     <widget class="QPushButton" name="apagar_caracteristica">
-      <property name="geometry">
-       <rect>
-        <x>540</x>
-        <y>340</y>
-        <width>93</width>
-        <height>28</height>
-       </rect>
-      </property>
-      <property name="text">
-       <string>Apagar</string>
-      </property>
-     </widget>
-     <widget class="QLabel" name="countrows">
-      <property name="geometry">
-       <rect>
-        <x>90</x>
-        <y>345</y>
-        <width>81</width>
-        <height>21</height>
-       </rect>
-      </property>
-      <property name="text">
-       <string>TextLabel</string>
-      </property>
-     </widget>
-    </widget>
-    <widget class="QWidget" name="tab_2">
-     <attribute name="title">
-      <string>Tab 2</string>
-     </attribute>
-    </widget>
-   </widget>
-   <zorder>tabWidget</zorder>
-   <zorder>label</zorder>
   </widget>
   <widget class="QMenuBar" name="menuBar">
    <property name="geometry">
@@ -153,6 +795,13 @@
      <height>26</height>
     </rect>
    </property>
+   <widget class="QMenu" name="menuMenu">
+    <property name="title">
+     <string>Menu</string>
+    </property>
+    <addaction name="actionSair"/>
+   </widget>
+   <addaction name="menuMenu"/>
   </widget>
   <widget class="QToolBar" name="mainToolBar">
    <attribute name="toolBarArea">
@@ -163,8 +812,30 @@
    </attribute>
   </widget>
   <widget class="QStatusBar" name="statusBar"/>
+  <action name="actionSair">
+   <property name="text">
+    <string>Sair</string>
+   </property>
+  </action>
  </widget>
  <layoutdefault spacing="6" margin="11"/>
  <resources/>
- <connections/>
+ <connections>
+  <connection>
+   <sender>actionSair</sender>
+   <signal>triggered()</signal>
+   <receiver>MainWindow</receiver>
+   <slot>close()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>-1</x>
+     <y>-1</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>412</x>
+     <y>305</y>
+    </hint>
+   </hints>
+  </connection>
+ </connections>
 </ui>
