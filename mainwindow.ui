@@ -7,7 +7,7 @@
     <x>0</x>
     <y>0</y>
     <width>825</width>
-    <height>648</height>
+    <height>699</height>
    </rect>
   </property>
   <property name="windowTitle">
@@ -20,7 +20,7 @@
       <x>10</x>
       <y>10</y>
       <width>801</width>
-      <height>561</height>
+      <height>631</height>
      </rect>
     </property>
     <property name="currentIndex">
@@ -113,7 +113,7 @@
       </property>
       <layout class="QHBoxLayout" name="horizontalLayout_3">
        <item>
-        <widget class="QPushButton" name="pushButton">
+        <widget class="QPushButton" name="loginbutton">
          <property name="text">
           <string>Login</string>
          </property>
@@ -146,7 +146,7 @@
        </rect>
       </property>
       <property name="currentIndex">
-       <number>2</number>
+       <number>4</number>
       </property>
       <widget class="QWidget" name="tab_automoveis">
        <attribute name="title">
@@ -311,7 +311,11 @@
           </widget>
          </item>
          <item>
-          <widget class="QDateEdit" name="data_venda"/>
+          <widget class="QDateEdit" name="data_venda">
+           <property name="calendarPopup">
+            <bool>true</bool>
+           </property>
+          </widget>
          </item>
         </layout>
        </widget>
@@ -493,7 +497,11 @@
           </widget>
          </item>
          <item>
-          <widget class="QDateEdit" name="data_compra"/>
+          <widget class="QDateEdit" name="data_compra">
+           <property name="calendarPopup">
+            <bool>true</bool>
+           </property>
+          </widget>
          </item>
         </layout>
        </widget>
@@ -590,6 +598,19 @@
           <string>total</string>
          </property>
         </column>
+       </widget>
+       <widget class="QLabel" name="label_abas">
+        <property name="geometry">
+         <rect>
+          <x>320</x>
+          <y>350</y>
+          <width>55</width>
+          <height>16</height>
+         </rect>
+        </property>
+        <property name="text">
+         <string>TextLabel</string>
+        </property>
        </widget>
       </widget>
       <widget class="QWidget" name="tab_pecas">
@@ -750,12 +771,83 @@
         </property>
        </widget>
       </widget>
+      <widget class="QWidget" name="revisao">
+       <attribute name="title">
+        <string>Revisão</string>
+       </attribute>
+       <widget class="QPushButton" name="adicionar_revisao">
+        <property name="geometry">
+         <rect>
+          <x>570</x>
+          <y>231</y>
+          <width>75</width>
+          <height>23</height>
+         </rect>
+        </property>
+        <property name="text">
+         <string>Adicionar</string>
+        </property>
+       </widget>
+       <widget class="QPushButton" name="apagar_revisao">
+        <property name="geometry">
+         <rect>
+          <x>651</x>
+          <y>231</y>
+          <width>75</width>
+          <height>23</height>
+         </rect>
+        </property>
+        <property name="text">
+         <string>Apagar</string>
+        </property>
+       </widget>
+       <widget class="QTableWidget" name="tabela_revisao">
+        <property name="geometry">
+         <rect>
+          <x>10</x>
+          <y>20</y>
+          <width>731</width>
+          <height>201</height>
+         </rect>
+        </property>
+        <column>
+         <property name="text">
+          <string>ID</string>
+         </property>
+        </column>
+        <column>
+         <property name="text">
+          <string>Matricula</string>
+         </property>
+        </column>
+        <column>
+         <property name="text">
+          <string>Oficina</string>
+         </property>
+        </column>
+        <column>
+         <property name="text">
+          <string>Kms</string>
+         </property>
+        </column>
+        <column>
+         <property name="text">
+          <string>Data</string>
+         </property>
+        </column>
+        <column>
+         <property name="text">
+          <string>Observacoes</string>
+         </property>
+        </column>
+       </widget>
+      </widget>
      </widget>
      <widget class="QPushButton" name="logout">
       <property name="geometry">
        <rect>
         <x>540</x>
-        <y>500</y>
+        <y>510</y>
         <width>93</width>
         <height>28</height>
        </rect>
@@ -834,6 +926,38 @@
     <hint type="destinationlabel">
      <x>412</x>
      <y>305</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>password</sender>
+   <signal>returnPressed()</signal>
+   <receiver>loginbutton</receiver>
+   <slot>click()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>466</x>
+     <y>303</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>377</x>
+     <y>344</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>username</sender>
+   <signal>returnPressed()</signal>
+   <receiver>password</receiver>
+   <slot>setFocus()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>468</x>
+     <y>272</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>466</x>
+     <y>303</y>
     </hint>
    </hints>
   </connection>

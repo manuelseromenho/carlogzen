@@ -22,6 +22,7 @@ class MainWindow : public QMainWindow
 
 public:
     explicit MainWindow(QWidget *parent = 0);
+
     ~MainWindow();
 
 private slots:
@@ -30,7 +31,7 @@ private slots:
     void on_apagar_caracteristica_clicked();
     void on_tabela_caracteristicas_cellChanged(int row, int column);
 
-    void on_pushButton_clicked();
+    void on_loginbutton_clicked();
     void on_logout_clicked();
 
     void on_adicionar_peca_clicked();
@@ -51,17 +52,39 @@ private slots:
 
     void on_adicionar_abastecimento_clicked();
 
+    void on_apagar_abastecimento_clicked();
+
+    void on_tabela_abastecimento_cellChanged(int row, int column);
+
+    void on_adicionar_revisao_clicked();
+
+    void on_tabela_revisao_cellChanged(int row, int column);
+
+    void on_apagar_revisao_clicked();
+
+    void combochanged();
+
+    void on_tabela_revisao_currentItemChanged(QTableWidgetItem *current, QTableWidgetItem *previous);
+
+    void numeros_registos();
+
 private:
     Ui::MainWindow *ui;
     QSqlDatabase db;
     bool loaded;
     QComboBox *combo_box;
+    QComboBox *combo_box_a;
     QDateEdit *dateEdit;
     void FillTable();
     void FillTable_pecas();
     void FillTable_manutencao();
     void FillTable_automoveis();
     void FillTable_abastecimento();
+    void FillTable_revisao();
+    int numregistos_revisao = 0;
+    int numregistos_revisao_anterior = 0;
+
+
 };
 
 #endif // MAINWINDOW_H
