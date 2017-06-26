@@ -9,7 +9,7 @@ MainWindow::MainWindow(QWidget *parent) :
     this->setWindowTitle("CarLogZen - Gestão de Frotas");
     //this->setStyleSheet("background-color: white;");
     QStackedWidget *stack = ui->stackedWidget;
-    stack->setCurrentIndex(1);
+    stack->setCurrentIndex(0);
 
     ui->tabWidget->setCurrentWidget(ui->tab_automoveis); //inicia no primeiro tab (automoveis)
 
@@ -36,7 +36,6 @@ MainWindow::MainWindow(QWidget *parent) :
     FillTable_automoveis();
     FillTable_abastecimento();
     FillTable_revisao();
-    numeros_registos();
 
     ui->tabela_automoveis->selectRow(0);
     ui->tabela_caracteristicas->selectColumn(0);
@@ -135,7 +134,54 @@ void MainWindow::on_logout_clicked()
         stack->setCurrentIndex(0);
         ui->username->setText("");
         ui->password->setText("");
+
+        ui->tabWidget->setTabEnabled(1, true);
+        ui->tabWidget->setTabEnabled(5, true);
+
+        //ui->tabela_automoveis->setEditTriggers(QAbstractItemView::EditTriggers());
+        ui->data_venda->show();
+        ui->preco_venda->show();
+        ui->label_14->show();
+        ui->label_15->show();
+        ui->vender->show();
+        ui->adicionar_automovel->show();
+        ui->apagar_automovel->show();
+
+        ui->tabela_abastecimento->setEditTriggers(QAbstractItemView::EditTrigger(true));
+        ui->adicionar_abastecimento->show();
+        ui->apagar_abastecimento->show();
+
+        ui->tabela_pecas->setEditTriggers(QAbstractItemView::EditTrigger(true));
+        ui->adicionar_peca->show();
+        ui->apagar_peca->show();
+        ui->tabela_manutencao->setEditTriggers(QAbstractItemView::EditTrigger(true));
+        ui->adicionar_manutencao->show();
+        ui->apagar_manutencao->show();
+
+        ui->tabela_revisao->setEditTriggers(QAbstractItemView::EditTrigger(true));
+        ui->adicionar_revisao->show();
+        ui->apagar_revisao->show();
+
+        ui->tabela_detalhes_revisao->setEditTriggers(QAbstractItemView::EditTrigger(true));
+        ui->adicionar_detalhe->show();
+        ui->apagar_detalhe->show();
+
+        ui->comboBox_peca->show();
+        ui->comboBox_manutencao->show();
+        ui->quantidade_peca->show();
+        ui->quantidade_manutencao->show();
+        ui->preco_peca->show();
+        ui->preco_manutencao->show();
+
+        ui->label_peca->show();
+        ui->label_12->show();
+        ui->label_tipo_manutencao->show();
+        ui->label_13->show();
+        ui->label_16->show();
+        ui->label_17->show();
     }
+
+
 }
 /************************/
 
@@ -693,9 +739,6 @@ void MainWindow::FillTable_revisao(){
 void MainWindow::on_adicionar_revisao_clicked()
 {
 
-    numregistos_revisao_anterior = numregistos_revisao;
-    numregistos_revisao = numregistos_revisao + 1;
-
     QSqlQuery q(db);
     QSqlQuery q1(db);
 
@@ -763,12 +806,7 @@ void MainWindow::on_tabela_revisao_cellChanged(int row, int column)
         numrows = ui->tabela_revisao->rowCount();
 
         QString idmatricula, data;
-
-
-
-
         int id = ui->tabela_revisao->item(row, 0)->text().toInt();
-
         idmatricula = ui->tabela_revisao->item(row, 1)->text();
 
         query.prepare("UPDATE revisoes SET idmatricula=:m,oficina=:o, kms=:k, datarevisao=:d, observacoes=:l WHERE idrevisao=:i" );
@@ -784,19 +822,11 @@ void MainWindow::on_tabela_revisao_cellChanged(int row, int column)
         {
             query.bindValue (":m", ui->tabela_revisao->item(row, 1)->text());
             query.bindValue (":d", ui->tabela_revisao->item(row, 4)->text());
-
         }
-
-
-
-
-
         query.bindValue (":o", ui->tabela_revisao->item (row, 2)->text());
         query.bindValue (":k", ui->tabela_revisao->item (row, 3)->text());
         query.bindValue (":l", ui->tabela_revisao->item (row, 5)->text());
         query.bindValue (":i", id);
-
-
 
         if (!query.exec())
         qDebug() << query.lastError().text();
@@ -816,23 +846,339 @@ void MainWindow::on_apagar_revisao_clicked()
 }
 /*******************/
 
-void MainWindow::combochanged()
-{
-    QMessageBox::information(this,"Modificado","Changed","ok");
-}
 
-void MainWindow::on_tabela_revisao_currentItemChanged(QTableWidgetItem *current, QTableWidgetItem *previous)
-{
-    //QMessageBox::information(this,"Combobox Changed","Combobox Changed","ok");
-}
 
-void MainWindow::numeros_registos()
+/***** Detalhes Revisão *****/
+void MainWindow::FillTable_detalhes_revisao()
 {
-    QSqlQuery query1(db);
-    if (!query1.exec("SELECT idrevisao FROM revisoes")) qDebug() << query1.lastError().text();
-    while( query1.next() )
-    {
-        numregistos_revisao;
+    QSqlQuery q,q1(db);
+    //int id = ui->tabela_revisao->curr;
+    int id = ui->tabela_revisao->item(ui->tabela_revisao->currentRow(), 0)->text().toInt();
+    int num_rows, r, c;
+    QString id_string = ui->tabela_revisao->item(ui->tabela_revisao->currentRow(), 0)->text();
+
+    if(!q.prepare("SELECT count(idrevisao) as num_rows FROM detalhes_revisao WHERE idrevisao=:i")) qDebug() << q.lastError().text();
+    q.bindValue(":i",id);
+    q.exec();
+    q.first();
+    num_rows = q.value(0).toInt();
+
+    ui->tabela_detalhes_revisao->setRowCount(num_rows);
+
+    //detalhes_revisao.idpeca, detalhes_revisao.idmanutencao,
+    if(!q.prepare("SELECT  iddetalhe, peca, tipomanutencao, quantidade_peca, quantidade_manutencao, precopeca, preco "
+                  "FROM detalhes_revisao "
+                  "Left JOIN pecas ON detalhes_revisao.idpeca=pecas.idpeca "
+                  "Left JOIN manutencao ON detalhes_revisao.idmanutencao = manutencao.idmanutencao "
+                  " WHERE idrevisao=:i")) qDebug() << q.lastError().text();
+    q.bindValue (":i",id);
+    q.exec();
+    q.first();
+
+    for(r=0, q.first();q.isValid(); q.next(), ++r){
+
+        ui->tabela_detalhes_revisao->setItem(r, 0, new QTableWidgetItem(q.value(0).toString()));//id detalhe
+        ui->tabela_detalhes_revisao->setItem(r, 1, new QTableWidgetItem(id_string));//id revisao
+        ui->tabela_detalhes_revisao->setItem(r, 2, new QTableWidgetItem(q.value(1).toString()));//nome peça
+        ui->tabela_detalhes_revisao->setItem(r, 3, new QTableWidgetItem(q.value(2).toString()));//nome manutenção
+        ui->tabela_detalhes_revisao->setItem(r, 4, new QTableWidgetItem(q.value(3).toString()));//quantidade peça
+        ui->tabela_detalhes_revisao->setItem(r, 5, new QTableWidgetItem(q.value(4).toString()));//quantidade manutenção
+        //ui->tabela_detrev->setItem(r, 6, new QTableWidgetItem(q.value(4).toString()));
+        float x =(q.value(3).toFloat() * q.value(5).toFloat()) + (q.value(4).toFloat() * q.value(6).toFloat());
+        QString s = QString::number(x);
+        ui->tabela_detalhes_revisao->setItem(r, 6, new QTableWidgetItem(s));
     }
-    numregistos_revisao_anterior = numregistos_revisao;
+}
+
+void MainWindow::on_adicionar_detalhes_clicked()
+{
+    FillTable_detalhes_revisao();
+    QStackedWidget *stack = ui->stackedWidget;
+    stack->setCurrentIndex(2);
+
+    int id_revisao = ui->tabela_revisao->item(ui->tabela_revisao->currentRow(), 0)->text().toInt();
+
+    QSqlQueryModel *model_peca = new QSqlQueryModel();
+    model_peca->setQuery("SELECT peca, idpeca, precopeca FROM pecas");
+    model_peca->setHeaderData(0,Qt::Horizontal, tr("idpeca"));
+    model_peca->setHeaderData(1, Qt::Horizontal, tr("peca"));
+    model_peca->setHeaderData(2, Qt::Horizontal, tr("precopeca"));
+    ui->comboBox_peca->setModel(model_peca);
+
+    QSqlQueryModel *model_manu = new QSqlQueryModel();
+    model_manu->setQuery("SELECT tipomanutencao, idmanutencao, preco FROM manutencao");
+    model_manu->setHeaderData(0 ,Qt::Horizontal, tr("idmanutencao"));
+    model_manu->setHeaderData(1, Qt::Horizontal, tr("tipomanutencao"));
+    model_manu->setHeaderData(3, Qt::Horizontal, tr("preco"));
+    ui->comboBox_manutencao->setModel(model_manu);
+}
+
+void MainWindow::on_sair_detalhe_clicked()
+{
+    QTabWidget *tabs = ui->tabWidget;
+    QStackedWidget *stack = ui->stackedWidget;
+    stack->setCurrentIndex(1);
+    tabs->setCurrentIndex(4);
+}
+
+void MainWindow::on_adicionar_detalhe_clicked()
+{
+    QSqlQuery q(db);
+
+    int idrevisao = ui->tabela_revisao->item(ui->tabela_revisao->currentRow(), 0)->text().toInt();
+    int row = ui->comboBox_peca->currentIndex();
+    QModelIndex idx = ui->comboBox_peca->model()->index(row, 1); // first column
+    QVariant data = ui->comboBox_peca->model()->data(idx);
+    int idpeca = data.toInt();
+
+    int row_manu = ui->comboBox_manutencao->currentIndex();
+    QModelIndex idx_manu = ui->comboBox_manutencao->model()->index(row_manu, 1); // first column
+    QVariant data_manu = ui->comboBox_manutencao->model()->data(idx_manu);
+    int idmanutencao = data_manu.toInt();
+
+    QString quantidade_peca= ui->quantidade_peca->text();
+    QString quantidade_manutencao = ui->quantidade_manutencao->text();
+
+    int iddetalhe = NULL;
+
+    q.prepare("INSERT INTO detalhes_revisao (idrevisao, idpeca, idmanutencao, quantidade_peca, quantidade_manutencao ) VALUES(:idrevisao , :idpeca, :idmanutencao, :qtdpeca, :qtdmanu)");
+    q.bindValue(":idrevisao", idrevisao);
+    q.bindValue(":idpeca", idpeca);
+    q.bindValue(":idmanutencao", idmanutencao);
+    q.bindValue(":qtdpeca", quantidade_peca);
+    q.bindValue(":qtdmanu", quantidade_manutencao);
+    if (!q.exec())
+    qDebug() << q.lastError().text();
+
+    FillTable_detalhes_revisao();
+
+}
+
+void MainWindow::on_comboBox_peca_currentIndexChanged(int index)
+{
+    int row = ui->comboBox_peca->currentIndex();
+    QModelIndex idx = ui->comboBox_peca->model()->index(row, 2); // first column
+    QVariant data = ui->comboBox_peca->model()->data(idx);
+    //int type_id = data.toInt();
+    QString preco = data.toString();
+
+    ui->preco_peca->setText(preco);
+    ui->preco_peca->setDisabled(true);
+    //QMessageBox::information(this,"Login","precopeca = " + preco,"ok");
+}
+
+void MainWindow::on_comboBox_manutencao_currentIndexChanged(int index)
+{
+    int row = ui->comboBox_manutencao->currentIndex();
+    QModelIndex idx = ui->comboBox_manutencao->model()->index(row, 2); // first column
+    QVariant data = ui->comboBox_manutencao->model()->data(idx);
+    //int type_id = data.toInt();
+    QString preco = data.toString();
+
+    ui->preco_manutencao->setText(preco);
+    ui->preco_manutencao->setDisabled(true);
+    //QMessageBox::information(this,"Login","precopeca = " + preco,"ok");
+}
+/****************************/
+
+/***** User *****/
+void MainWindow::on_alterar_password_clicked()
+{
+    QSqlQuery q = QSqlQuery(db);
+    QSqlQuery updateQuery = QSqlQuery(db);
+
+    if (!q.exec("SELECT iduser,username,password FROM users")) qDebug() << q.lastError().text();
+
+    QString username;
+    QString password;
+    int iduser;
+    int numregistos = 0;
+    while( q.next() )
+    {
+        numregistos++;
+    }
+
+    qDebug() << numregistos;
+
+    q.first();
+    for (int x=0;x<numregistos;x++)
+    {
+
+        iduser = q.value(0).toInt();
+        username = q.value(1).toString();
+        password= q.value(2).toString();
+        //qDebug() << id << nome << password;
+
+        if (ui->alt_username->text()==username && ui->alt_password->text()==password && ui->alt_new_password->text()==ui->alt_conf_new_password->text()){
+
+            updateQuery.prepare("UPDATE users SET password=:p WHERE username=:n" );
+            updateQuery.bindValue (":p", ui->alt_conf_new_password->text());
+            updateQuery.bindValue (":n", ui->alt_username->text());
+            updateQuery.exec();
+            QMessageBox::information(this,"Password","Password alterada com sucesso!","ok");
+            x=numregistos;
+        }
+        else
+        {
+            q.next();
+        }
+    }
+
+    if (!updateQuery.exec())
+        qDebug() << updateQuery.lastError().text();
+
+    if (ui->alt_username->text().isEmpty() || ui->alt_password->text().isEmpty() || ui->alt_username->text()!=username || ui->alt_password->text()!=password
+        )
+    {
+        QMessageBox::warning(this,"Password","Utilizador inexistente ou erro na password!","ok");
+    }
+}
+
+void MainWindow::on_criar_user_clicked()
+{
+    if (ui->nov_password->text() != ui->nov_conf_password->text()){
+        QMessageBox::warning(this,"Criar","Password não corresponde!","ok");
+
+    } else if(ui->nov_username->text().isEmpty() || ui->nov_password->text().isEmpty()){
+        QMessageBox::warning(this,"Criar","User ou password em branco!","ok");
+
+    }else{
+
+    QSqlQuery insertQuery = QSqlQuery(db);
+    insertQuery.prepare("INSERT INTO users (username, password) VALUES(:username , :password)");
+    insertQuery.bindValue(":username", ui->nov_username->text());
+    insertQuery.bindValue(":password", ui->nov_password->text());
+    if(!insertQuery.exec())
+        QMessageBox::warning(this, "Aviso", "User já existente! Tente de novo..", "ok");
+
+    else
+        QMessageBox::information(this, "Info", "Novo user criado com sucesso!", "ok");
+    }
+}
+
+/***************/
+
+
+void MainWindow::on_pushButton_2_clicked()
+{
+    QTabWidget *tabs = ui->tabWidget;
+    QStackedWidget *stack = ui->stackedWidget;
+
+    ui->tabWidget->setTabEnabled(1, false);
+    ui->tabWidget->setTabEnabled(5, false);
+
+    //ui->tabela_automoveis->setEnabled(false);
+    ui->tabela_automoveis->setEditTriggers(QAbstractItemView::NoEditTriggers);
+    ui->data_venda->hide();
+    ui->preco_venda->hide();
+    ui->label_14->hide();
+    ui->label_15->hide();
+    ui->vender->hide();
+    ui->adicionar_automovel->hide();
+    ui->apagar_automovel->hide();
+
+    /*
+    ui->data_compra->hide();
+    ui->preco_compra->hide();
+    ui->comprar->hide();
+    ui->adicionar_caracteristica->hide();
+    ui->apagar_caracteristica->hide();*/
+
+    ui->tabela_abastecimento->setEditTriggers(QAbstractItemView::NoEditTriggers);
+    ui->adicionar_abastecimento->hide();
+    ui->apagar_abastecimento->hide();
+
+    ui->tabela_pecas->setEditTriggers(QAbstractItemView::NoEditTriggers);
+    ui->adicionar_peca->hide();
+    ui->apagar_peca->hide();
+    ui->tabela_manutencao->setEditTriggers(QAbstractItemView::NoEditTriggers);
+    ui->adicionar_manutencao->hide();
+    ui->apagar_manutencao->hide();
+
+    ui->tabela_revisao->setEditTriggers(QAbstractItemView::NoEditTriggers);
+    ui->adicionar_revisao->hide();
+    ui->apagar_revisao->hide();
+
+    ui->tabela_detalhes_revisao->setEditTriggers(QAbstractItemView::NoEditTriggers);
+    ui->adicionar_detalhe->hide();
+    ui->apagar_detalhe->hide();
+
+    ui->comboBox_peca->hide();
+    ui->comboBox_manutencao->hide();
+    ui->quantidade_peca->hide();
+    ui->quantidade_manutencao->hide();
+    ui->preco_peca->hide();
+    ui->preco_manutencao->hide();
+
+    ui->label_peca->hide();
+    ui->label_12->hide();
+    ui->label_tipo_manutencao->hide();
+    ui->label_13->hide();
+    ui->label_16->hide();
+    ui->label_17->hide();
+
+
+    stack->setCurrentIndex(1);
+    tabs->setCurrentIndex(0);
+
+
+
+}
+
+
+
+
+void MainWindow::on_imprimir_abastecimento_clicked()
+{
+    int num_rows, r,c;
+    QSqlQuery q(db);
+    QString data = QDate::currentDate().toString();
+
+    if(!q.exec("SELECT count(idabastecimento) FROM abastecimento")) qDebug() << q.lastError().text();
+
+    q.first();
+    num_rows = q.value(0).toInt();
+    qDebug() << num_rows;
+
+    QPrinter printer;
+    printer.setOutputFormat(QPrinter::PdfFormat);
+    printer.setOrientation(QPrinter::Landscape);
+    printer.setPageSize(QPrinter::A4);
+    const QString desktopFolder = QStandardPaths::writableLocation(QStandardPaths::DesktopLocation);
+    printer.setOutputFileName(desktopFolder + "/frota.pdf");
+    QPainter painter;
+    if (! painter.begin(&printer)){
+        qWarning("failed to open file");
+    }
+
+    QImage logo("../carlog_logo.png");
+    QImage logo1 = logo.scaled(100,300,Qt::KeepAspectRatio);
+    painter.drawImage(10,10,logo1);
+
+    QFont fonte;
+    fonte.setPixelSize(30);
+    QFont fonte2;
+    fonte2.setPixelSize(20);
+    fonte2.setBold(true);
+    QFont fonte3;
+    fonte3.setPixelSize(15);
+
+    painter.setFont(fonte3);
+    for(r=0; r<num_rows; r++){
+        for(c=0; c<8; c++){
+            painter.drawText(c*100,170+(r*15),(ui->tabela_abastecimento->item(r,c)->text()));
+        }
+    }
+
+    painter.drawText(Qt::AlignLeft,750, data);
+    painter.setFont(fonte);
+    painter.drawText(Qt::AlignCenter,100, "Abastecimentos");
+
+    painter.setFont(fonte2);
+    for(c=0; c<8; c++){
+        painter.drawText(c*100,150,(ui->tabela_abastecimento->horizontalHeaderItem(c)->text()));
+    }
+    painter.end();
+
+    QMessageBox::information(this,"PDF","Documento gerado no seu Ambiente de Trabalho!","ok");
 }

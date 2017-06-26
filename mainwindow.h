@@ -62,11 +62,23 @@ private slots:
 
     void on_apagar_revisao_clicked();
 
-    void combochanged();
+    void on_adicionar_detalhes_clicked();
 
-    void on_tabela_revisao_currentItemChanged(QTableWidgetItem *current, QTableWidgetItem *previous);
+    void on_sair_detalhe_clicked();
 
-    void numeros_registos();
+    void on_adicionar_detalhe_clicked();
+
+    void on_comboBox_peca_currentIndexChanged(int index);
+
+    void on_comboBox_manutencao_currentIndexChanged(int index);
+
+    void on_alterar_password_clicked();
+
+    void on_criar_user_clicked();
+    
+    void on_pushButton_2_clicked();
+
+    void on_imprimir_abastecimento_clicked();
 
 private:
     Ui::MainWindow *ui;
@@ -81,8 +93,7 @@ private:
     void FillTable_automoveis();
     void FillTable_abastecimento();
     void FillTable_revisao();
-    int numregistos_revisao = 0;
-    int numregistos_revisao_anterior = 0;
+    void FillTable_detalhes_revisao();
 
 
 };
