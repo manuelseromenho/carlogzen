@@ -1,3 +1,3 @@
 # carlogzen
-Projeto feito em QT. 
-Esta aplicação foi criada em contexto académico, com o objectivo de gerir uma frota de carros.
+
+Academic work based on the creation of a tool (using QT and C++) to manage a fleet of cars in a company.
